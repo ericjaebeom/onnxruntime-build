@@ -132,12 +132,6 @@ jobs:
             -DANDROID_STL=c++_shared \
             -DCMAKE_POSITION_INDEPENDENT_CODE=ON"
           
-          # Explicitly disable MLAS ASM for x86 ABI due to PIC issue
-          if [ "$arch" == "x86" ]; then
-              export CMAKE_OPTIONS="$CMAKE_OPTIONS -Donnxruntime_MLAS_NO_ASM=ON"
-              echo "Disabled problematic MLAS ASM for x86 ABI."
-          fi
-          
           ./build-static_lib.sh
 
       - name: Collect result ${{ matrix.arch }}
