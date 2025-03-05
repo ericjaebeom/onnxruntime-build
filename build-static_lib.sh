@@ -33,9 +33,6 @@ set -ex
     sed -i.bak '/SOVERSION/d' ./cmake/onnxruntime.cmake
 )
 
-export CXXFLAGS="$CXXFLAGS -fPIC"
-export CFLAGS="$CFLAGS -fPIC"
-
 cmake \
     -S "$SOURCE_DIR" \
     -B "$BUILD_DIR" \
