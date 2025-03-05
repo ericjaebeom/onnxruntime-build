@@ -9,10 +9,6 @@ OUTPUT_DIR=${OUTPUT_DIR:=output/static_lib}
 ONNXRUNTIME_SOURCE_DIR=${ONNXRUNTIME_SOURCE_DIR:=onnxruntime}
 ONNXRUNTIME_VERSION=${ONNXRUNTIME_VERSION:=$(cat ONNXRUNTIME_VERSION)}
 
-# Explicitly export CXXFLAGS and CFLAGS to enforce -fPIC globally
-export CXXFLAGS="${CXXFLAGS} -fPIC"
-export CFLAGS="${CFLAGS} -fPIC"
-
 echo "CMAKE_BUILD_TYPE: $CMAKE_BUILD_TYPE"
 echo "CMAKE_OPTIONS: $CMAKE_OPTIONS"
 
@@ -36,6 +32,9 @@ set -ex
     git submodule update --init --depth=1 --recursive
     sed -i.bak '/SOVERSION/d' ./cmake/onnxruntime.cmake
 )
+
+export CXXFLAGS="$CXXFLAGS -fPIC"
+export CFLAGS="$CFLAGS -fPIC"
 
 cmake \
     -S "$SOURCE_DIR" \
