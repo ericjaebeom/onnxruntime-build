@@ -117,18 +117,21 @@ jobs:
           export CMAKE_CXX_COMPILER_LAUNCHER=ccache
           export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
           cmake --version
-
+      
           export ANDROID_NDK_HOME=${{ steps.setup-ndk.outputs.ndk-path }}
           export ANDROID_NDK=${{ steps.setup-ndk.outputs.ndk-path }}
-
-
+      
           arch=${{ matrix.arch }}
-
-          export CMAKE_OPTIONS="--compile-no-warning-as-error -Donnxruntime_BUILD_UNIT_TESTS=OFF \
-          -DONNX_CUSTOM_PROTOC_EXECUTABLE=$GITHUB_WORKSPACE/bin/protoc \
-          -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake \
-          -DANDROID_ABI=$arch -DANDROID_PLATFORM=android-21 -DANDROID_STL=c++_shared"
-
+      
+          export CMAKE_OPTIONS="--compile-no-warning-as-error \
+            -Donnxruntime_BUILD_UNIT_TESTS=OFF \
+            -DONNX_CUSTOM_PROTOC_EXECUTABLE=$GITHUB_WORKSPACE/bin/protoc \
+            -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake \
+            -DANDROID_ABI=$arch \
+            -DANDROID_PLATFORM=android-24 \  # matched with your minSdk
+            -DANDROID_STL=c++_shared \
+            -DCMAKE_POSITION_INDEPENDENT_CODE=ON" # Explicit PIC globally
+      
           ./build-static_lib.sh
 
       - name: Collect result ${{ matrix.arch }}
