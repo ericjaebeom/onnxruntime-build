@@ -128,9 +128,9 @@ jobs:
             -DONNX_CUSTOM_PROTOC_EXECUTABLE=$GITHUB_WORKSPACE/bin/protoc \
             -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake \
             -DANDROID_ABI=$arch \
-            -DANDROID_PLATFORM=android-24 \  # matched with your minSdk
+            -DANDROID_PLATFORM=android-24 \
             -DANDROID_STL=c++_shared \
-            -DCMAKE_POSITION_INDEPENDENT_CODE=ON" # Explicit PIC globally
+            -DCMAKE_POSITION_INDEPENDENT_CODE=ON"
       
           ./build-static_lib.sh
 
